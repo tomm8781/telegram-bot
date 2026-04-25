@@ -18,7 +18,7 @@ def from_user(message):
     name = user.first_name + (f" @{user.username}" if user.username else "")
     sent = bot.send_message(
         ADMIN_ID,
-        f"[BOT 2]\nNguoi dung: {name}\nID: {user.id}\nTin nhan: {message.text}",
+        f"[BOT 2] {name} (ID: {user.id}): {message.text}",
     )
     user_map[sent.message_id] = user.id
 
@@ -28,4 +28,9 @@ def from_admin(message):
     target_id = user_map.get(original_id)
     if target_id:
         bot.send_message(target_id, message.text)
-        bot.reply_to(me
+        bot.reply_to(message, "Da gui!")
+    else:
+        bot.reply_to(message, "Khong tim thay nguoi dung!")
+
+print("Bot 2 dang chay...")
+bot.polling()
