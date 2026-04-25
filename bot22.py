@@ -1,7 +1,7 @@
 import telebot
 import os
 
-TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN_2")
 ADMIN_ID = int(os.environ.get("ADMIN_ID"))
 
 bot = telebot.TeleBot(TELEGRAM_TOKEN)
